@@ -22,6 +22,7 @@ mechanical model:
 | | **Static** | **Dynamic** |
 |---|---|---|
 | Element | Beam element, moment-rigid at both ends unless a hinge is defined | Pin-jointed truss member (moment released at both ends) |
+| Stiffness | `EA`, `EI` | `EA` only |
 | Nodal DOFs | `D1`, `D2`, `D3` | `D1`, `D2` (rotations restrained) |
 | Inputs | Nodal loads and moments, element loads, hinges, supports incl. rotational restraint | Nodal masses, axial dampers, initial conditions |
 | Results | Deformed shape, `N` / `Q` / `M` diagrams, nodal displacements, support reactions | Animated time response, displacement & velocity time histories, eigenfrequencies, damping ratios, animated eigenmodes |
@@ -155,7 +156,8 @@ or bracing easy to spot.
   conditions.
 - Live blueprint preview of the structure next to the tables, including supports, hinge symbols,
   joint types and load arrows.
-- Inputs are filtered by mode, so only quantities that the active model actually uses are shown.
+- Inputs are filtered by mode, so only quantities that the active model actually uses are shown
+  (e.g. no `D3` restraint and no `EI` in Dynamic mode).
 
 **Static view**
 
@@ -184,6 +186,8 @@ or bracing easy to spot.
 **General**
 
 - Automatic fit-to-view with an adaptive, labelled background grid.
+- Axis key in the corner of every view showing the directions of `D1`, `D2` and, in Static
+  mode, `D3`.
 - Ghost overlay of the undeformed structure in every view.
 - Support, joint and hinge symbols derived from the actual restraints and releases (square joint =
   rotation restrained, circle = free).

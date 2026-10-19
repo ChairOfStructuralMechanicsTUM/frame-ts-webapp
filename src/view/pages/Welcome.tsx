@@ -131,8 +131,9 @@ export default function Welcome({ examples, onSelect, onStartFromScratch, onImpo
                 <Section title="Capabilities">
                     <Text size="sm">
                         Plane (2D) frame and truss structures, analysed in the browser. No data leaves your
-                        machine. The element is always a full Euler Bernoulli beam; a truss member is the
-                        special case with the moment released at both ends.
+                        machine. In static mode every element is a full Euler Bernoulli beam. In dynamic
+                        mode every element is a truss bar, i.e. the same beam with the moment released at
+                        both ends, so it carries only normal forces.
                     </Text>
 
                     <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="md">
@@ -149,6 +150,7 @@ export default function Welcome({ examples, onSelect, onStartFromScratch, onImpo
                         <Card withBorder radius="md" padding="md">
                             <Text fw={600} mb={6}>Dynamic</Text>
                             <List size="sm" spacing={4}>
+                                <List.Item>Pin-jointed truss model with axial stiffness <Code>EA</Code> only</List.Item>
                                 <List.Item>Animated free vibration from initial conditions</List.Item>
                                 <List.Item>Displacement and velocity time histories per DOF</List.Item>
                                 <List.Item>Eigenfrequencies, damping ratios and animated mode shapes</List.Item>
@@ -177,7 +179,7 @@ export default function Welcome({ examples, onSelect, onStartFromScratch, onImpo
                             In <b>Edit</b>, fill the tables: node coordinates and supports <Code>D1</Code>/<Code>D2</Code>/<Code>D3</Code>,
                             elements with <Code>EA</Code>, <Code>EI</Code> and damper <Code>c</Code>, then hinges
                             and loads, or masses and initial conditions. The blueprint next to the tables updates
-                            as you type.
+                            as you type, and the key in its corner shows the direction of each DOF.
                         </List.Item>
                         <List.Item>
                             Switch to <b>Analyze</b> for the results. In the static view, click a node or an
@@ -213,6 +215,9 @@ export default function Welcome({ examples, onSelect, onStartFromScratch, onImpo
                             <b>Element.</b> Euler Bernoulli beam with two nodes, axial stiffness <Code>EA</Code> and
                             bending stiffness <Code>EI</Code>, i.e. the standard 6×6 local stiffness matrix. It is
                             rotated per element end into global coordinates and assembled into the global matrices.
+                            Dynamic mode releases the moment at both ends of every element and restrains every
+                            nodal rotation, which leaves a pure truss: only <Code>EA</Code> enters, and each node
+                            keeps <Code>D1</Code> and <Code>D2</Code>.
                         </List.Item>
                         <List.Item>
                             <b>Hinges.</b> A released normal force, shear force or moment at an element end is
@@ -246,7 +251,8 @@ export default function Welcome({ examples, onSelect, onStartFromScratch, onImpo
                     </List>
 
                     <Text size="sm">
-                        <b>Dynamics.</b> Mass is lumped per node, and each element may carry a viscous axial
+                        <b>Dynamics.</b> The structure is modelled as a truss, see above. Mass is lumped per
+                        node, and each element may carry a viscous axial
                         dashpot in parallel with its axial spring, condensed and assembled just like the
                         stiffness. The damped equation of motion is rewritten as a state space system of first order
                         in <Code>[w, ẇ]</Code>,
