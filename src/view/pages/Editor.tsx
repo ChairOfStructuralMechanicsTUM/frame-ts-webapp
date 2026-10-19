@@ -205,6 +205,7 @@ export default function Editor({ view, nodes, setNodes, elements, setElements, h
                     pointMoments={pointMoments}
                     distributedForces={distributedForces}
                     themeOverride={BLUEPRINT_THEME}
+                    dofLegend={view === 'dynamic' ? 'truss' : 'frame'}
                 />
             </Box>
 

@@ -267,6 +267,7 @@ export default function StaticVisualization({ structuralSystem, loads }: {
                         selectedNodeId={selectedNodeId}
                         onElementClick={handleElementClick}
                         onNodeClick={handleNodeClick}
+                        dofLegend="frame"
                     />
                 </Box>
 

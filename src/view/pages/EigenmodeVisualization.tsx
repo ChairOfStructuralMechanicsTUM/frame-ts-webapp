@@ -123,6 +123,7 @@ export default function EigenmodeVisualization({ structuralSystem }: { structura
                         showNodes={showNodes}
                         showBearings={showBearings}
                         showHinges={true}
+                        dofLegend="truss"
                     />
                 </Box>
 

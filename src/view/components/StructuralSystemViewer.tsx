@@ -60,6 +60,7 @@ interface StructuralSystemViewerProps {
     onElementClick?: (elementId: number) => void;
     onNodeClick?: (nodeId: number) => void;
     showNodeCross?: boolean;
+    dofLegend?: 'frame' | 'truss';
 }
 
 // #region Visual theme ─────────────────────────────────────────────────────────
@@ -899,11 +900,40 @@ function AnimatedLayer({ structuralSystem, getNodePosition, getElementPositions,
 
 // #endregion
 
+// #region DofLegend ────────────────────────────────────────────────────────────
+
+function DofLegend({ variant, color }: { variant: 'frame' | 'truss'; color: string }) {
+    return (
+        <svg
+            width={96} height={84} viewBox="0 0 96 84"
+            style={{ position: 'absolute', left: 12, top: 12, pointerEvents: 'none', color, fontFamily: 'sans-serif' }}
+        >
+            <defs>
+                <marker id="dof-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M0,0 L10,5 L0,10 z" fill="currentColor" />
+                </marker>
+            </defs>
+            <g stroke="currentColor" strokeWidth={1.5} fill="none">
+                <line x1={14} y1={66} x2={64} y2={66} markerEnd="url(#dof-arrow)" />
+                <line x1={14} y1={66} x2={14} y2={16} markerEnd="url(#dof-arrow)" />
+                {variant === 'frame' && <path d="M 52.6 55.6 A 40 40 0 0 0 24.4 27.4" markerEnd="url(#dof-arrow)" />}
+            </g>
+            <g fill="currentColor" fontSize={11}>
+                <text x={68} y={70}>x, D1</text>
+                <text x={4} y={10}>z, D2</text>
+                {variant === 'frame' && <text x={46} y={34}>D3</text>}
+            </g>
+        </svg>
+    );
+}
+
+// #endregion
+
 // #region StructuralSystemViewer ───────────────────────────────────────────────
 
 const StructuralSystemViewer = React.memo(function StructuralSystemViewer({
     structuralSystem, getNodePosition, getElementPositions, showUndeformedSystem, showNodes, showBearings, showHinges, showReferenceFiber, pointForces, pointMoments, distributedForces, themeOverride,
-    selectedElementId, selectedNodeId, onElementClick, onNodeClick, showNodeCross = false,
+    selectedElementId, selectedNodeId, onElementClick, onNodeClick, showNodeCross = false, dofLegend,
 }: StructuralSystemViewerProps) {
     const effectiveTheme = useMemo(() => ({ ...THEME, ...themeOverride }), [themeOverride]);
     const containerRef = useRef<HTMLDivElement>(null);
@@ -1035,6 +1065,7 @@ const StructuralSystemViewer = React.memo(function StructuralSystemViewer({
                     />
                 )}
             </Stage>
+            {dofLegend && <DofLegend variant={dofLegend} color={effectiveTheme.nodeText} />}
         </div>
     );
 });

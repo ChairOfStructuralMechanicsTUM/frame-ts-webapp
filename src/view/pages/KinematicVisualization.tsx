@@ -10,7 +10,7 @@ import { elementDisplacementField } from "../../solver/displacementField";
 import { deformedElementPoints } from "../utils/elementCurves";
 
 
-export default function KinematicVisualization({ structuralSystem }: { structuralSystem: StructuralSystem }) {
+export default function KinematicVisualization({ structuralSystem, dofLegend }: { structuralSystem: StructuralSystem; dofLegend: 'frame' | 'truss' }) {
     const [selectedMode, setSelectedMode] = useState(0);
     const [speed, setSpeed] = useState(1);
     const [scale, setScale] = useState(1);
@@ -95,6 +95,7 @@ export default function KinematicVisualization({ structuralSystem }: { structura
                         showBearings={showBearings}
                         showHinges={true}
                         showNodeCross={true}
+                        dofLegend={dofLegend}
                     />
                 </Box>
 

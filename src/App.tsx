@@ -243,7 +243,7 @@ export default function App() {
             />
           )}
           {!editMode && isKinematic && (
-            <KinematicVisualization structuralSystem={activeSystem} />
+            <KinematicVisualization structuralSystem={activeSystem} dofLegend={view === 'dynamic' ? 'truss' : 'frame'} />
           )}
           {!editMode && !isKinematic && view === 'dynamic' && masslessDynamic && (
             <Alert color="orange" title="Massless degrees of freedom" variant="light" m="md">

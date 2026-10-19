@@ -86,6 +86,7 @@ export default function DynamicVisualization({ structuralSystem, initialConditio
                         showNodes={showNodes}
                         showBearings={showBearings}
                         showHinges={true}
+                        dofLegend="truss"
                     />
                 </Box>
                 <DiagramSidebar structuralSystem={structuralSystem} solution={solution} />
