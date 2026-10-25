@@ -1,10 +1,11 @@
 import React, { useCallback, useMemo } from 'react';
-import { ActionIcon, Box, Button, Checkbox, Divider, Flex, Group, NumberInput, ScrollArea, SegmentedControl, Stack, Table, Text } from '@mantine/core';
+import { ActionIcon, Box, Button, Checkbox, Divider, Flex, Group, ScrollArea, SegmentedControl, Stack, Table, Text } from '@mantine/core';
 import { IconTrash } from '@tabler/icons-react';
 
 import { type NodeInput, type ElementInput, type HingeInput, type InitialConditions, type Loads, type NodalLoad, type MomentLoad, type ElementLoad } from "../../models/inputModels";
 import { StructuralSystem } from '../../solver/StructuralSystem';
 import StructuralSystemViewer, { type Theme } from '../components/StructuralSystemViewer';
+import { NumberField } from '../components/NumberField';
 
 const SIDEBAR_WIDTH = 420;
 const ID_COL_WIDTH  = 60;
@@ -239,13 +240,13 @@ export default function Editor({ view, nodes, setNodes, elements, setElements, h
                                     <Table.Tr key={row.id}>
                                         <Table.Td bg="gray.1">{row.id}</Table.Td>
                                         <Table.Td>
-                                            <NumberInput value={row.x} onChange={(e) => updateNode(row.id, { x: Number(e) || 0 })} variant="unstyled" hideControls />
+                                            <NumberField value={row.x} onChange={(e) => updateNode(row.id, { x: e })} variant="unstyled" hideControls />
                                         </Table.Td>
                                         <Table.Td>
-                                            <NumberInput value={row.z} onChange={(e) => updateNode(row.id, { z: Number(e) || 0 })} variant="unstyled" hideControls />
+                                            <NumberField value={row.z} onChange={(e) => updateNode(row.id, { z: e })} variant="unstyled" hideControls />
                                         </Table.Td>
                                         {view === 'dynamic' && <Table.Td>
-                                            <NumberInput value={row.mass} onChange={(e) => updateNode(row.id, { mass: Number(e) || 0 })} variant="unstyled" hideControls />
+                                            <NumberField value={row.mass} onChange={(e) => updateNode(row.id, { mass: e })} variant="unstyled" hideControls />
                                         </Table.Td>}
                                         <Table.Td>
                                             <Checkbox checked={row.restraint.D1} onChange={(e) => updateNode(row.id, { restraint: { ...row.restraint, D1: e.currentTarget.checked } })} />
@@ -289,16 +290,16 @@ export default function Editor({ view, nodes, setNodes, elements, setElements, h
                                     <Table.Tr key={row.id}>
                                         <Table.Td bg="gray.1">{row.id}</Table.Td>
                                         <Table.Td>
-                                            <NumberInput value={ic.D1_0} onChange={(e) => updateInitialCondition(row.id, { D1_0: Number(e) || 0 })} variant="unstyled" hideControls disabled={row.restraint.D1} />
+                                            <NumberField value={ic.D1_0} onChange={(e) => updateInitialCondition(row.id, { D1_0: e })} variant="unstyled" hideControls disabled={row.restraint.D1} />
                                         </Table.Td>
                                         <Table.Td>
-                                            <NumberInput value={ic.D2_0} onChange={(e) => updateInitialCondition(row.id, { D2_0: Number(e) || 0 })} variant="unstyled" hideControls disabled={row.restraint.D2} />
+                                            <NumberField value={ic.D2_0} onChange={(e) => updateInitialCondition(row.id, { D2_0: e })} variant="unstyled" hideControls disabled={row.restraint.D2} />
                                         </Table.Td>
                                         <Table.Td>
-                                            <NumberInput value={ic.dD1_0} onChange={(e) => updateInitialCondition(row.id, { dD1_0: Number(e) || 0 })} variant="unstyled" hideControls disabled={row.restraint.D1} />
+                                            <NumberField value={ic.dD1_0} onChange={(e) => updateInitialCondition(row.id, { dD1_0: e })} variant="unstyled" hideControls disabled={row.restraint.D1} />
                                         </Table.Td>
                                         <Table.Td>
-                                            <NumberInput value={ic.dD2_0} onChange={(e) => updateInitialCondition(row.id, { dD2_0: Number(e) || 0 })} variant="unstyled" hideControls disabled={row.restraint.D2} />
+                                            <NumberField value={ic.dD2_0} onChange={(e) => updateInitialCondition(row.id, { dD2_0: e })} variant="unstyled" hideControls disabled={row.restraint.D2} />
                                         </Table.Td>
                                     </Table.Tr>
                                     );
@@ -327,13 +328,13 @@ export default function Editor({ view, nodes, setNodes, elements, setElements, h
                                 {loads.nodes.map((row) => (
                                     <Table.Tr key={row.id}>
                                         <Table.Td bg="gray.1" w={ID_COL_WIDTH}>
-                                            <NumberInput value={row.node_id} onChange={(e) => updateNodalLoad(row.id, { node_id: Number(e) || 0 })} variant="unstyled" hideControls />
+                                            <NumberField value={row.node_id} onChange={(e) => updateNodalLoad(row.id, { node_id: e })} variant="unstyled" hideControls />
                                         </Table.Td>
                                         <Table.Td>
-                                            <NumberInput value={row.magnitude} onChange={(e) => updateNodalLoad(row.id, { magnitude: Number(e) || 0 })} variant="unstyled" hideControls />
+                                            <NumberField value={row.magnitude} onChange={(e) => updateNodalLoad(row.id, { magnitude: e })} variant="unstyled" hideControls />
                                         </Table.Td>
                                         <Table.Td>
-                                            <NumberInput value={row.angle} onChange={(e) => updateNodalLoad(row.id, { angle: Number(e) || 0 })} variant="unstyled" hideControls />
+                                            <NumberField value={row.angle} onChange={(e) => updateNodalLoad(row.id, { angle: e })} variant="unstyled" hideControls />
                                         </Table.Td>
                                         <Table.Td>
                                             <ActionIcon variant="subtle" color="red" size="sm" onClick={() => deleteNodalLoad(row.id)}>
@@ -363,10 +364,10 @@ export default function Editor({ view, nodes, setNodes, elements, setElements, h
                                 {loads.moments.map((row) => (
                                     <Table.Tr key={row.id}>
                                         <Table.Td bg="gray.1" w={ID_COL_WIDTH}>
-                                            <NumberInput value={row.node_id} onChange={(e) => updateMomentLoad(row.id, { node_id: Number(e) || 0 })} variant="unstyled" hideControls />
+                                            <NumberField value={row.node_id} onChange={(e) => updateMomentLoad(row.id, { node_id: e })} variant="unstyled" hideControls />
                                         </Table.Td>
                                         <Table.Td>
-                                            <NumberInput value={row.magnitude} onChange={(e) => updateMomentLoad(row.id, { magnitude: Number(e) || 0 })} variant="unstyled" hideControls />
+                                            <NumberField value={row.magnitude} onChange={(e) => updateMomentLoad(row.id, { magnitude: e })} variant="unstyled" hideControls />
                                         </Table.Td>
                                         <Table.Td>
                                             <ActionIcon variant="subtle" color="red" size="sm" onClick={() => deleteMomentLoad(row.id)}>
@@ -398,16 +399,16 @@ export default function Editor({ view, nodes, setNodes, elements, setElements, h
                                 {loads.elements.map((row) => (
                                     <Table.Tr key={row.id}>
                                         <Table.Td bg="gray.1" w={ID_COL_WIDTH}>
-                                            <NumberInput value={row.element_id} onChange={(e) => updateElementLoad(row.id, { element_id: Number(e) || 0 })} variant="unstyled" hideControls />
+                                            <NumberField value={row.element_id} onChange={(e) => updateElementLoad(row.id, { element_id: e })} variant="unstyled" hideControls />
                                         </Table.Td>
                                         <Table.Td>
-                                            <NumberInput value={row.q_i} onChange={(e) => updateElementLoad(row.id, { q_i: Number(e) || 0 })} variant="unstyled" hideControls />
+                                            <NumberField value={row.q_i} onChange={(e) => updateElementLoad(row.id, { q_i: e })} variant="unstyled" hideControls />
                                         </Table.Td>
                                         <Table.Td>
-                                            <NumberInput value={row.q_j} onChange={(e) => updateElementLoad(row.id, { q_j: Number(e) || 0 })} variant="unstyled" hideControls />
+                                            <NumberField value={row.q_j} onChange={(e) => updateElementLoad(row.id, { q_j: e })} variant="unstyled" hideControls />
                                         </Table.Td>
                                         <Table.Td>
-                                            <NumberInput value={row.angle} onChange={(e) => updateElementLoad(row.id, { angle: Number(e) || 0 })} variant="unstyled" hideControls />
+                                            <NumberField value={row.angle} onChange={(e) => updateElementLoad(row.id, { angle: e })} variant="unstyled" hideControls />
                                         </Table.Td>
                                         <Table.Td>
                                             <ActionIcon variant="subtle" color="red" size="sm" onClick={() => deleteElementLoad(row.id)}>
@@ -437,7 +438,7 @@ export default function Editor({ view, nodes, setNodes, elements, setElements, h
                                 {hinges.map((row) => (
                                     <Table.Tr key={row.id}>
                                         <Table.Td bg="gray.1" w={ID_COL_WIDTH}>
-                                            <NumberInput value={row.element_id} onChange={(e) => updateHinge(row.id, { element_id: Number(e) || 0 })} variant="unstyled" hideControls />
+                                            <NumberField value={row.element_id} onChange={(e) => updateHinge(row.id, { element_id: e })} variant="unstyled" hideControls />
                                         </Table.Td>
                                         <Table.Td>
                                             <SegmentedControl
@@ -484,19 +485,19 @@ export default function Editor({ view, nodes, setNodes, elements, setElements, h
                                     <Table.Tr key={row.id}>
                                         <Table.Td bg="gray.1">{row.id}</Table.Td>
                                         <Table.Td>
-                                            <NumberInput value={row.node_i} onChange={(e) => updateElement(row.id, { node_i: Number(e) || 0 })} variant="unstyled" hideControls />
+                                            <NumberField value={row.node_i} onChange={(e) => updateElement(row.id, { node_i: e })} variant="unstyled" hideControls />
                                         </Table.Td>
                                         <Table.Td>
-                                            <NumberInput value={row.node_j} onChange={(e) => updateElement(row.id, { node_j: Number(e) || 0 })} variant="unstyled" hideControls />
+                                            <NumberField value={row.node_j} onChange={(e) => updateElement(row.id, { node_j: e })} variant="unstyled" hideControls />
                                         </Table.Td>
                                         <Table.Td>
-                                            <NumberInput value={row.ea} onChange={(e) => updateElement(row.id, { ea: Number(e) || 0 })} variant="unstyled" hideControls />
+                                            <NumberField value={row.ea} onChange={(e) => updateElement(row.id, { ea: e })} variant="unstyled" hideControls />
                                         </Table.Td>
                                         {view === 'static' && <Table.Td>
-                                            <NumberInput value={row.ei} onChange={(e) => updateElement(row.id, { ei: Number(e) || 0 })} variant="unstyled" hideControls />
+                                            <NumberField value={row.ei} onChange={(e) => updateElement(row.id, { ei: e })} variant="unstyled" hideControls />
                                         </Table.Td>}
                                         {view === 'dynamic' && <Table.Td>
-                                            <NumberInput value={row.c} onChange={(e) => updateElement(row.id, { c: Number(e) || 0 })} variant="unstyled" hideControls />
+                                            <NumberField value={row.c} onChange={(e) => updateElement(row.id, { c: e })} variant="unstyled" hideControls />
                                         </Table.Td>}
                                         <Table.Td>
                                             <ActionIcon variant="subtle" color="red" size="sm" onClick={() => deleteElement(row.id)}>

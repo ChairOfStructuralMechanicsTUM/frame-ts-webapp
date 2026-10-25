@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from 'react';
-import { Box, Flex, Text, MultiSelect, Group, CloseButton, Divider, NumberInput, SimpleGrid, Modal } from '@mantine/core';
+import { Box, Flex, Text, MultiSelect, Group, CloseButton, Divider, SimpleGrid, Modal } from '@mantine/core';
 import MatrixLineChart from "./Chart";
+import { NumberField } from './NumberField';
 import type { StructuralSystem } from '../../solver/StructuralSystem';
 import type { DynamicSolution } from '../../solver/DynamicSolution';
 import { useVisualizationStore } from '../../store/visualizationStore';
@@ -84,29 +85,29 @@ export const DiagramSidebar = React.memo(function DiagramSidebar({
                     <Box p="xs" style={{ backgroundColor: '#fff', borderRadius: '8px', border: '1px solid #e9ecef' }}>
                         <Text size="xs" fw={700} mb="xs" c="dimmed">TIME RANGE & SAMPLING</Text>
                         <SimpleGrid cols={2} spacing="xs">
-                            <NumberInput
+                            <NumberField
                                 label="Start Time (t1)"
                                 size="xs"
                                 value={t1}
-                                onChange={(val) => setT1(Number(val))}
+                                onChange={setT1}
                                 min={0}
                                 step={0.5}
                             />
-                            <NumberInput
+                            <NumberField
                                 label="End Time (t2)"
                                 size="xs"
                                 value={t2}
-                                onChange={(val) => setT2(Number(val))}
+                                onChange={setT2}
                                 min={t1}
                                 step={0.5}
                             />
                         </SimpleGrid>
-                        <NumberInput
+                        <NumberField
                             label="Number of Points (n)"
                             size="xs"
                             mt="xs"
                             value={numPoints}
-                            onChange={(val) => setNumPoints(Number(val))}
+                            onChange={setNumPoints}
                             min={2}
                             max={1000}
                         />

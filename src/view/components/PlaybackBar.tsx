@@ -1,7 +1,8 @@
 import { useRef, useEffect } from "react";
-import { ActionIcon, Checkbox, Divider, Group, NumberInput, Paper, Text } from '@mantine/core';
+import { ActionIcon, Checkbox, Divider, Group, Paper, Text } from '@mantine/core';
 import { IconPlayerPlay, IconPlayerPause, IconRotateClockwise } from '@tabler/icons-react';
 import { useAnimationStore } from "../../store/animationStore";
+import { NumberField } from "./NumberField";
 
 function TimeDisplay() {
     const ref = useRef<HTMLParagraphElement>(null);
@@ -44,9 +45,9 @@ export function PlaybackBar({
                     <TimeDisplay />
                     <Divider orientation="vertical" color="gray.3" />
                     <Text size="sm">Speed</Text>
-                    <NumberInput
+                    <NumberField
                         value={speed}
-                        onChange={(v) => onSpeedChange(Number(v) || 1)}
+                        onChange={(v) => onSpeedChange(v || 1)}
                         w={60}
                         size="sm"
                         step={0.1}
