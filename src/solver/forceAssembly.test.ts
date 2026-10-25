@@ -1,10 +1,8 @@
 import { expect, test } from 'vitest';
-import { index, subset } from 'mathjs';
 import { assembleForceVector } from './forceAssembly';
 import { Polynomial } from './Polynomial';
 import { StructuralLoads } from './StructuralLoads';
 import { StructuralSystem } from './StructuralSystem';
-import { SystemSolver } from './SystemSolver';
 import type { Loads } from '../models/inputModels';
 
 const ACC = 9;

@@ -125,7 +125,7 @@ function supportOutline(node: StructuralNode, B: number): Array<[number, number]
     return corners;
 }
 
-function NodeShape({ node, colors, showNode, showBearing, showNodeCross = false, jointRef }: { node: StructuralNode; colors: NodeColors; showNode: boolean; showBearing: boolean; showNodeCross?: boolean; jointRef?: React.Ref<Konva.Group> }) {
+function NodeShape({ node, colors, showNode, showBearing, showNodeCross = false, ref }: { node: StructuralNode; colors: NodeColors; showNode: boolean; showBearing: boolean; showNodeCross?: boolean; ref?: React.Ref<Konva.Group> }) {
     const R = THEME.nodeRadius;
     const B = THEME.bearingSize;
     return <>
@@ -149,7 +149,7 @@ function NodeShape({ node, colors, showNode, showBearing, showNodeCross = false,
                 ctx.fillStrokeShape(shape);
             }} />
         )}
-        <Group ref={jointRef}>
+        <Group ref={ref}>
             {node.restraint.D3
                 ? <Rect visible={showNode} x={-(B-2)} y={-(B-2)} width={2 * (B-2)} height={2 * (B-2)} fill={colors.nodeFill} stroke={colors.stroke} strokeWidth={2} />
                 : <Group visible={showNode}>
@@ -257,12 +257,15 @@ const GhostLayer = React.memo(({ structuralSystem, show, showNodes, showBearings
 const TICK_COUNT = 5;
 
 function withAlpha(color: string, alpha: string, fallback?: string): string {
-    if (color.startsWith('rgba')) return color.replace(/[\d\.]+\)$/, `${alpha})`);
+    if (color.startsWith('rgba')) return color.replace(/[\d.]+\)$/,`${alpha})`);
     return fallback ?? color;
 }
 
-function refSetter<T>(mapRef: { current: Map<any, T> }, id: any) {
-    return (node: T | null) => { node ? mapRef.current.set(id, node) : mapRef.current.delete(id); };
+function refSetter<K, T>(mapRef: { current: Map<K, T> }, id: K) {
+    return (node: T | null) => {
+        if (node) mapRef.current.set(id, node);
+        else mapRef.current.delete(id);
+    };
 }
 
 function renderArrowsForce(
@@ -885,7 +888,7 @@ function AnimatedLayer({ structuralSystem, getNodePosition, getElementPositions,
                             showNode={showNodes}
                             showBearing={showBearings}
                             showNodeCross={showNodeCross}
-                            jointRef={refSetter(nodeJointRefs, node.id)}
+                            ref={refSetter(nodeJointRefs, node.id)}
                         />
                         {/* Extra glow ring when selected */}
                         {isNodeSelected && (

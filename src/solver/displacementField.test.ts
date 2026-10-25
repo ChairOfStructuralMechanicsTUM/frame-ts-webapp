@@ -1,5 +1,4 @@
 import { expect, test } from "vitest";
-import { index, subset } from "mathjs";
 import { StructuralSystem } from "./StructuralSystem";
 import { SystemSolver } from "./SystemSolver";
 import { StructuralLoads } from "./StructuralLoads";

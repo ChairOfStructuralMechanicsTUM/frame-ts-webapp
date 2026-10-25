@@ -21,13 +21,13 @@ export class SystemSolver {
     constructor(system: StructuralSystem) {
         let k = matrix(zeros(system.ndof, system.ndof));
         let c = matrix(zeros(system.ndof, system.ndof));
-        let m = matrix(zeros(system.ndof, system.ndof));
+        const m = matrix(zeros(system.ndof, system.ndof));
 
-        let restrained: number[] = [];
-        let non_restrained: number[] = [];
+        const restrained: number[] = [];
+        const non_restrained: number[] = [];
 
         const expand_matrix = (m: Matrix, indices: number[]) => {
-            let T = matrix(zeros([indices.length, system.ndof]))
+            const T = matrix(zeros([indices.length, system.ndof]))
 
             indices.forEach((idx, i) => {
                 T.set([i, idx], 1);
@@ -38,8 +38,8 @@ export class SystemSolver {
 
 
         for (const e of system.elements) {
-            let n_i = e.n_i;
-            let n_j = e.n_j;
+            const n_i = e.n_i;
+            const n_j = e.n_j;
 
             let k_e = k_element(e.ea, e.ei, e.L);
             let c_e = c_element(e.c);
@@ -164,19 +164,19 @@ export class SystemSolver {
             );
         }
 
-        let m_inv = inv(this.m_11);
+        const m_inv = inv(this.m_11);
 
-        let a11 = zeros([this.ndof_non_restrained, this.ndof_non_restrained]) as Matrix;
-        let a12 = identity(this.ndof_non_restrained) as Matrix;
-        let a21 = multiply(-1, multiply(m_inv, this.k_11));
-        let a22 = multiply(-1, multiply(m_inv, this.c_11));
+        const a11 = zeros([this.ndof_non_restrained, this.ndof_non_restrained]) as Matrix;
+        const a12 = identity(this.ndof_non_restrained) as Matrix;
+        const a21 = multiply(-1, multiply(m_inv, this.k_11));
+        const a22 = multiply(-1, multiply(m_inv, this.c_11));
 
-        let a = merge(a11, a12, a21, a22);
+        const a = merge(a11, a12, a21, a22);
 
-        let eigenVectors = getEigenvectors(a);
-        let eigenValues = getEigenvalues(a);
+        const eigenVectors = getEigenvectors(a);
+        const eigenValues = getEigenvalues(a);
 
-        let coefficients = lusolve(eigenVectors, initialConditions);
+        const coefficients = lusolve(eigenVectors, initialConditions);
 
         return new DynamicSolution(
             eigenVectors,

@@ -1,4 +1,4 @@
-import { dotMultiply, exp, map, multiply, range, re, row, subset, index, zeros, matrix, type Matrix } from "mathjs";
+import { dotMultiply, exp, map, multiply, range, re, row, subset, index, zeros, matrix, type Complex, type Matrix } from "mathjs";
 
 export class DynamicSolution {
     readonly NDOF: number;
@@ -79,9 +79,9 @@ export class DynamicSolution {
         if (eigenmode < 0 || eigenmode >= this.eigenValues.size()[0])
             throw new Error(`Eigenmode ${eigenmode} out of range`);
 
-        const lambda = this.eigenValues.get([eigenmode, 0]);
+        const lambda: number | Complex = this.eigenValues.get([eigenmode, 0]);
         const eigenvector = subset(this.eigenVectors, index(range(0, this.NDOF * 2), eigenmode));
-        const e = exp(multiply(lambda, t) as any);
+        const e = exp(multiply(lambda, t) as number | Complex);
 
         return multiply(eigenvector, e).map((v, _) => re(v) as unknown as number);
     }

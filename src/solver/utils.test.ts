@@ -1,4 +1,4 @@
-import { matrix, multiply, abs, subtract, subset, index, range, sum, eigs, complex, Matrix, equal, norm, divide } from 'mathjs';
+import { matrix, multiply, abs, subtract, subset, index, range, sum, eigs, complex, Matrix } from 'mathjs';
 import { getEigenvalues, getEigenvectors, isMultiple, merge } from './utils';
 import { expect, test } from 'vitest';
 
@@ -50,12 +50,12 @@ test('eigenvectors should satisfy the identity Av = λv', () => {
 });
 
 test('merge', () => {
-    let a11 = matrix([[0]]);
-    let a12 = matrix([[1]]);
-    let a21 = matrix([[2]]);
-    let a22 = matrix([[3]]);
+    const a11 = matrix([[0]]);
+    const a12 = matrix([[1]]);
+    const a21 = matrix([[2]]);
+    const a22 = matrix([[3]]);
 
-    let a = matrix([
+    const a = matrix([
         [0, 1],
         [2, 3]
     ])
@@ -67,21 +67,21 @@ test('merge', () => {
 
 test('eigenvectors', () => {
 
-    let m = matrix([
+    const m = matrix([
         [0.0, -1.0],
         [1.0, 0.0]
     ]);
 
-    let eigen = eigs(m);
-    let V = eigen.eigenvectors;
+    const eigen = eigs(m);
+    const V = eigen.eigenvectors;
 
     expect(V.length).toBe(2);
 
-    let e1 = V[0].value;
-    let v1 = V[0].vector as Matrix;
+    const e1 = V[0].value;
+    const v1 = V[0].vector as Matrix;
 
-    let e2 = V[1].value;
-    let v2 = V[1].vector as Matrix;
+    const e2 = V[1].value;
+    const v2 = V[1].vector as Matrix;
 
     // Eigenvalue 1 should be equal to: e = i;
     expect(e1).toStrictEqual(complex(0, 1));
@@ -95,7 +95,7 @@ test('eigenvectors', () => {
 })
 
 test('getEigenvectors', () => {
-    let m = matrix([
+    const m = matrix([
         [0.0, -1.0],
         [1.0, 0.0]
     ]);
@@ -108,7 +108,7 @@ test('getEigenvectors', () => {
 
 
 test('getEigenvalues', () => {
-    let m = matrix([
+    const m = matrix([
         [0.0, -1.0],
         [1.0, 0.0]
     ]);

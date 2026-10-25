@@ -6,7 +6,7 @@ import { SystemSolver } from "../../solver/SystemSolver";
 import type { Loads } from "../../models/inputModels";
 import { toSolverAngles } from "../../models/loadConventions";
 import { useStaticViewStore, type ForceMode } from "../../store/staticViewStore";
-import StructuralSystemViewer, { type PointForce, type PointMoment } from "../components/StructuralSystemViewer";
+import StructuralSystemViewer, { type DistributedForce, type PointForce, type PointMoment } from "../components/StructuralSystemViewer";
 import { StaticDiagramSidebar } from "../components/StaticDiagramSidebar";
 import { assembleForceVector } from "../../solver/forceAssembly";
 import { elementForceField } from "../../solver/internalForces";
@@ -168,7 +168,7 @@ export default function StaticVisualization({ structuralSystem, loads }: {
     }, [structuralSystem, solution, showReactions]);
 
     const distributedForces = useMemo(() => {
-        const list: Array<any> = [];
+        const list: DistributedForce[] = [];
 
         if (showElement) {
             loads.elements.forEach((load) => {

@@ -26,9 +26,11 @@ ChartJS.register(
     Legend
 );
 
+type VerticalLinePluginOptions = { xValue: number; color: string };
+
 const verticalLinePlugin = {
     id: 'verticalLinePlugin',
-    afterDraw: (chart: { scales?: any; ctx?: any; chartArea?: any; }, _args: any, options: { xValue: any; color: string; }) => {
+    afterDraw: (chart: Chart, _args: unknown, options: VerticalLinePluginOptions) => {
         const { ctx, chartArea: { top, bottom } } = chart;
         const x = chart.scales.x.getPixelForValue(options.xValue);
 
@@ -79,8 +81,9 @@ const MatrixLineChart = ({ matrixData, yAxis }: { matrixData: Matrix, yAxis: str
             const chart = chartRef.current;
             if (!chart) return;
             const t = state.time;
-            (chart.options.plugins as any).title.text = `Current time: ${t.toFixed(2)}s`;
-            (chart.options.plugins as any).verticalLinePlugin.xValue = t;
+            const plugins = chart.options.plugins as { title: { text: string }; verticalLinePlugin: VerticalLinePluginOptions };
+            plugins.title.text = `Current time: ${t.toFixed(2)}s`;
+            plugins.verticalLinePlugin.xValue = t;
             chart.update('none');
         });
     }, []);

@@ -27,7 +27,7 @@ export default function DynamicVisualization({ structuralSystem, initialConditio
             .filter(v => v !== null)
             .join(',');
         syncDofKey(key);
-    }, [structuralSystem]);
+    }, [structuralSystem, syncDofKey]);
 
     const solution = useMemo(() => {
         const solver = new SystemSolver(structuralSystem);

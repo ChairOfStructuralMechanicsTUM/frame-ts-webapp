@@ -2,9 +2,9 @@ import { concat, eigs, flatten, matrix, reshape, type Matrix } from "mathjs";
 
 
 export function getEigenvectors(m: Matrix): Matrix {
-    let ncols = m.size().at(1)!;
+    const ncols = m.size().at(1)!;
 
-    let eigen = eigs(m).eigenvectors;
+    const eigen = eigs(m).eigenvectors;
 
     let r = reshape(eigen.at(0)!.vector as Matrix, [ncols, 1]) as Matrix;
 
@@ -17,9 +17,9 @@ export function getEigenvectors(m: Matrix): Matrix {
 
 
 export function getEigenvalues(m: Matrix): Matrix {
-    let nrows = m.size().at(0)!;
+    const nrows = m.size().at(0)!;
 
-    let eigen = eigs(m).eigenvectors;
+    const eigen = eigs(m).eigenvectors;
 
     const values = eigen.slice(0, nrows).map(e => e.value as number);
     return reshape(matrix(values), [nrows, 1]) as Matrix;

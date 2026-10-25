@@ -165,7 +165,7 @@ export const StaticDiagramSidebar = React.memo(function StaticDiagramSidebar({
             map.set(`du-${el.id}`, disps.map(p => ({ xi: p.xi, value: p.u })));
         });
         return map;
-    }, [structuralSystem, solution, structuralLoads, elements]);
+    }, [solution, structuralLoads, elements]);
 
     const getLabel = (key: string) => {
         const type = key.split('-')[0];
