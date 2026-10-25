@@ -1,5 +1,5 @@
 import '@mantine/core/styles.css';
-import { ActionIcon, Alert, AppShell, Badge, Button, Divider, Group, MantineProvider, SegmentedControl, Text, TextInput, Tooltip } from '@mantine/core';
+import { ActionIcon, Alert, AppShell, Badge, Button, Divider, Group, Image, MantineProvider, SegmentedControl, Text, TextInput, Tooltip } from '@mantine/core';
 import { IconCamera } from '@tabler/icons-react';
 import { useMemo, useRef, useState } from "react";
 
@@ -17,6 +17,7 @@ import { examples } from "./examples";
 import { migrateSystemFile, SYSTEM_FILE_VERSION, type SystemFile } from "./models/systemFile";
 import { useViewerStageStore } from "./store/viewerStageStore";
 import { downloadThumbnail, toFilenameStem } from "./view/utils/thumbnail";
+import logo from "./assets/logo.png";
 
 const EMPTY_SYSTEM: SystemFile = {
   version: SYSTEM_FILE_VERSION,
@@ -161,17 +162,17 @@ export default function App() {
           <Group h="100%" px="md" justify="space-between">
             <Group gap={6}>
               <Tooltip label="Back to examples and documentation">
-                <Text
-                  fw={700}
-                  size="lg"
+                <Image
+                  src={logo}
+                  alt="FrameTS"
+                  h={24}
+                  w="auto"
                   style={{ cursor: 'pointer' }}
                   onClick={() => setGalleryOpen(true)}
                   role="button"
                   tabIndex={0}
                   onKeyDown={e => { if (e.key === 'Enter') setGalleryOpen(true); }}
-                >
-                  FrameTS
-                </Text>
+                />
               </Tooltip>
             </Group>
 

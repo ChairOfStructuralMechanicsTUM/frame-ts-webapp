@@ -1,3 +1,5 @@
+![FrameTS](src/assets/cover.png)
+
 # FrameTS
 
 An interactive, browser-based tool for the analysis of **plane (2D) frame and truss structures**.

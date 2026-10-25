@@ -3,6 +3,7 @@ import { IconFileImport, IconPencilPlus, IconPhotoOff } from '@tabler/icons-reac
 
 import type { Example } from '../../examples';
 import type { SystemFile } from '../../models/systemFile';
+import cover from '../../assets/cover.png';
 
 interface WelcomeProps {
     examples: Example[];
@@ -99,7 +100,9 @@ export default function Welcome({ examples, onSelect, onStartFromScratch, onImpo
     return (
         <Container size="lg" py={60}>
             <Stack gap={4} mb="xl">
-                <Title order={1}>FrameTS</Title>
+                <Title order={1}>
+                    <Image src={cover} alt="FrameTS" mah={320} w="auto" maw="100%" mx="auto" mb={-40} />
+                </Title>
                 <Text c="dimmed">
                     Static and dynamic analysis of plane frames. Pick an example to explore, or start your own.
                 </Text>
