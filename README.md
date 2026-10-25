@@ -227,3 +227,8 @@ algebra and eigenvalue solution), Zustand and Chart.js.
   singular.
 - Geometrically and materially **linear** analysis only; no buckling, no plasticity, no
   temperature or prestress loading.
+
+
+## License
+
+[MIT](LICENSE) © 2026 Christoph Markefka
